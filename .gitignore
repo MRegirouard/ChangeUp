@@ -1,0 +1,3 @@
+# Files not needed by VEXCode V5 Text:
+/build/*
+compile_commands.json
