@@ -8,9 +8,18 @@
 /*----------------------------------------------------------------------------*/
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// FrontLeft            motor         1               
+// FrontRight           motor         2               
+// BackLeft             motor         20              
+// BackRight            motor         10              
+// Controller1          controller                    
+// IMU                  inertial      5               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+#include "Robot.h"
 
 using namespace vex;
 
@@ -18,6 +27,14 @@ using namespace vex;
 competition Competition;
 
 // define your global instances of motors and other devices here
+
+float WheelDiameter = 3.25; // (inches)
+float Width = 19; // Middle of wheel to middle of opposite wheel (inches)
+Robot Robot(WheelDiameter, Width); // Setup the Robot
+
+int ForwardSpeed;
+int RightSpeed;
+int RotationSpeed;
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -35,6 +52,8 @@ void pre_auton(void) {
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+
+
 }
 
 /*---------------------------------------------------------------------------*/
@@ -51,6 +70,12 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
+
+  printf("Running autonomous...\n");
+  //Robot.Move(0, 0, 90, 50, true);
+  Robot.Move(0, 24, 0, 50);
+  Robot.Move(50, 50, 90);
+  printf("Autonomous complete.\n");
 }
 
 /*---------------------------------------------------------------------------*/
@@ -65,6 +90,8 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+  printf("Running driver control...\n");
+
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
@@ -75,6 +102,11 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
+    ForwardSpeed = Controller1.Axis2.position();
+    RightSpeed = Controller1.Axis1.position();
+    RotationSpeed = Controller1.Axis4.position();
+    Robot.Drive(ForwardSpeed, RightSpeed, RotationSpeed);
+
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
@@ -84,6 +116,8 @@ void usercontrol(void) {
 // Main will set up the competition functions and callbacks.
 //
 int main() {
+  printf("Beginning main program...\n");
+
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
