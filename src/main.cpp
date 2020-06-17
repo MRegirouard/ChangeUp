@@ -2,14 +2,60 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+#include "Button.h"
 
 using namespace vex;
 competition Competition;
+Button RedButton(40, 140, 180, 80, 0);
+Button BlueButton(160, 140, 180, 80, 240);
+Button LeftSideButton(40, 100, 200, 80, 100, "Left Side", 20, 0);
+Button RightSideButton(140, 100, 200, 80, 100, "Right Side", 20, 0);
+std::string TeamMsg = "Select Team:";
+std::string Team;
+std::string SideMsg = "Select Side:";
+std::string Side;
 
 void pre_auton()
 {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+
+  Brain.Screen.clearScreen();
+  RedButton.Draw();
+  BlueButton.Draw();
+  Brain.Screen.setFont(mono30);
+  Brain.Screen.printAt(240 - vexDisplayStringWidthGet(TeamMsg.c_str()) / 2, 80 - vexDisplayStringHeightGet(TeamMsg.c_str()) / 2, TeamMsg.c_str());
+
+  while (!(RedButton.IsPressed() || BlueButton.IsPressed())) {;}
+
+  if (RedButton.IsPressed())
+  {
+    Team = "Red";
+  }
+  else
+  {
+    Team = "Blue";
+  }
+
+  printf("Team: %s \n", Team.c_str());
+
+  Brain.Screen.clearScreen();
+  LeftSideButton.Draw();
+  RightSideButton.Draw();
+  Brain.Screen.printAt(240 - vexDisplayStringWidthGet(SideMsg.c_str()) / 2, 80 - vexDisplayStringHeightGet(SideMsg.c_str()) / 2, SideMsg.c_str());
+
+  while (!(LeftSideButton.IsPressed() || RightSideButton.IsPressed())) {;}
+
+  if (LeftSideButton.IsPressed())
+  {
+    Side = "Left";
+  }
+  else
+  {
+    Side = "Right";
+  }
+
+  printf("Side: %s \n ", Side.c_str());
 }
 
 void autonomous()
