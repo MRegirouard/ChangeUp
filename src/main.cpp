@@ -3,6 +3,7 @@
 
 #include "vex.h"
 #include "Button.h"
+#include "SelectionScreen.h"
 
 using namespace vex;
 competition Competition;
@@ -14,11 +15,19 @@ std::string TeamMsg = "Select Team:";
 std::string Team;
 std::string SideMsg = "Select Side:";
 std::string Side;
+std::string Confirm;
+SelectionScreen AllianceSelection = SelectionScreen(SelectionScreen::Alliance);
+SelectionScreen SideSelection = SelectionScreen(SelectionScreen::LeftRightSide);
+SelectionScreen ConfirmSelection = SelectionScreen(SelectionScreen::ConfirmCancel);
+Button AllianceSelectionButtons[2] = {Button(40, 140, 180, 80, red), Button(160, 140, 180, 80, blue)};
+SelectionScreen OtherAllianceSelection = SelectionScreen(AllianceSelectionButtons, 2, "Select Team (2):");
 
 void pre_auton()
 {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+
+  printf("Beginning button test.");
 
   Brain.Screen.setFillColor(black);
   Brain.Screen.clearScreen();
@@ -57,6 +66,26 @@ void pre_auton()
   }
 
   printf("Side: %s \n ", Side.c_str());
+
+  printf("Beginning selection screen test.");
+
+  Brain.Screen.clearScreen();
+  Team = AllianceSelection.WaitForPress();
+  printf("Team: %s \n", Team.c_str());
+
+  Brain.Screen.clearScreen();
+  Side = SideSelection.WaitForPress();
+  printf("Side: %s \n ", Side.c_str());
+
+  Brain.Screen.clearScreen();
+  Confirm = ConfirmSelection.WaitForPress();
+  printf("Confirm: %s \n ", Confirm.c_str());
+
+  Brain.Screen.clearScreen();
+  Team = OtherAllianceSelection.WaitForPress();
+  printf("Team: %s \n", Team.c_str());
+
+  printf("\nTest complete.");
 }
 
 void autonomous()
