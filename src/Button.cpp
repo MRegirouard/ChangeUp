@@ -1,10 +1,10 @@
 #include "Button.h"
 
-Button::Button(int XPos, int YPos, int Width, int Height, int Hue, std::string Text, int TextSize, int TextHue)
+Button::Button(int XPos, int YPos, int Width, int Height, color Color, std::string Text, int TextSize, color TextColor)
 {
-  Button(XPos, YPos, Width, Height, Hue);
+  Button(XPos, YPos, Width, Height, Color);
   this->Text = Text;
-  this->TextHue = TextHue;
+  this->TextColor = TextColor;
 
   switch(TextSize)
   {
@@ -28,22 +28,21 @@ Button::Button(int XPos, int YPos, int Width, int Height, int Hue, std::string T
   CalcTextLocation();
 }
 
-Button::Button(int XPos, int YPos, int Width, int Height, int Hue)
+Button::Button(int XPos, int YPos, int Width, int Height, color Color)
 {
   this->XPos = XPos;
   this->YPos = YPos;
   this->Width = Width;
   this->Height = Height;
-  this->Hue = Hue;
+  this->Color = Color;
 }
 
 void Button::Draw()
 {
-  Brain.Screen.setFillColor(Hue);
-  Brain.Screen.setPenColor(Hue);
+  Brain.Screen.setPenColor(Color);
   Brain.Screen.setFont(Font);
   Brain.Screen.drawRectangle(XPos, YPos, XPos + Width, YPos + Height);
-  Brain.Screen.setPenColor(TextHue);
+  Brain.Screen.setPenColor(TextColor);
   Brain.Screen.printAt(TextX, TextY, Text.c_str());
 }
 

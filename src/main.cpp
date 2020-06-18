@@ -6,10 +6,10 @@
 
 using namespace vex;
 competition Competition;
-Button RedButton(40, 140, 180, 80, 0);
-Button BlueButton(160, 140, 180, 80, 240);
-Button LeftSideButton(40, 100, 200, 80, 100, "Left Side", 20, 0);
-Button RightSideButton(140, 100, 200, 80, 100, "Right Side", 20, 0);
+Button RedButton(40, 140, 180, 80, red);
+Button BlueButton(160, 140, 180, 80, blue);
+Button LeftSideButton(40, 100, 200, 80, orange, "Left Side", 20, black);
+Button RightSideButton(140, 100, 200, 80, green, "Right Side", 20, black);
 std::string TeamMsg = "Select Team:";
 std::string Team;
 std::string SideMsg = "Select Side:";
@@ -20,6 +20,7 @@ void pre_auton()
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
+  Brain.Screen.setFillColor(black);
   Brain.Screen.clearScreen();
   RedButton.Draw();
   BlueButton.Draw();
