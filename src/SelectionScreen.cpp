@@ -31,6 +31,18 @@ SelectionScreen::SelectionScreen(Button *OptionButtons, int ButtonCount, std::st
 
 std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
 {
+  Controller1.Screen.clearScreen();
+  Controller1.Screen.setCursor(1, 1);
+  Controller1.Screen.print("%s", TitleText.c_str());
+  Controller1.Screen.newLine();
+  Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[0].Text.c_str());
+  Controller1.Screen.print("  %s", OptionButtons[1].Text.c_str());
+
+  int SelectedOption = 0;
+  int Option1 = 0;
+  int Option2 = 1;
+
+
   if (PreClear)
     Brain.Screen.clearScreen();
 
@@ -45,16 +57,67 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
 
   while (true)
   {
-    while (Brain.Screen.pressing())
+    if (Brain.Screen.pressing())
     {
       for (int B = 0; B < ButtonCount; B++)
       {
         if (OptionButtons[B].IsPressed())
         {
+          while (Brain.Screen.pressing()) {;}
+          
           return OptionButtons[B].Text;
+
           if (PostClear)
             Brain.Screen.clearScreen();
         }
+      }
+    }
+    else if (Controller1.ButtonUp.pressing())
+    {
+      if (SelectedOption == 1 && Option1 > 0)
+      {
+        Option1--;
+        Option2--;
+        SelectedOption = 1;
+
+        Controller1.Screen.setCursor(2, 1);
+        Controller1.Screen.clearLine();
+        Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option1].Text.c_str());
+        Controller1.Screen.newLine();
+        Controller1.Screen.clearLine();
+        Controller1.Screen.print("  %s", OptionButtons[Option2].Text.c_str());
+      }
+      else if (SelectedOption == 2)
+      {
+        Controller1.Screen.setCursor(2, 1);
+        Controller1.Screen.print(Indicator.c_str());
+        Controller1.Screen.newLine();
+        Controller1.Screen.print(" ");
+        SelectedOption = 1;
+      }
+    }
+    else if (Controller1.ButtonDown.pressing())
+    {
+      if (SelectedOption == 2 && Option2 < ButtonCount - 1)
+      {
+        Controller1.Screen.setCursor(2, 1);
+        Controller1.Screen.print(" ");
+        Controller1.Screen.setCursor(3, 1);
+        Controller1.Screen.print(Indicator.c_str());
+        SelectedOption = 2;
+      }
+      else if (SelectedOption == 1)
+      {
+        Option1++;
+        Option2++;
+        SelectedOption = 2;
+
+        Controller1.Screen.setCursor(2, 1);
+        Controller1.Screen.clearLine();
+        Controller1.Screen.print("  %s", OptionButtons[Option1].Text.c_str());
+        Controller1.Screen.newLine();
+        Controller1.Screen.clearLine();
+        Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option2].Text.c_str());
       }
     }
   }

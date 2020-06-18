@@ -24,6 +24,7 @@ class SelectionScreen
 
   private:
     int ButtonCount = 2;
+    std::string Indicator = "-";
 };
 
 #endif // SELECTIONSCREENCLASS_H
