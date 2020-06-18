@@ -69,20 +69,16 @@ void pre_auton()
 
   printf("Beginning selection screen test.");
 
-  Brain.Screen.clearScreen();
   Team = AllianceSelection.WaitForPress();
   printf("Team: %s \n", Team.c_str());
 
-  Brain.Screen.clearScreen();
   Side = SideSelection.WaitForPress();
   printf("Side: %s \n ", Side.c_str());
 
-  Brain.Screen.clearScreen();
   Confirm = ConfirmSelection.WaitForPress();
   printf("Confirm: %s \n ", Confirm.c_str());
 
-  Brain.Screen.clearScreen();
-  Team = OtherAllianceSelection.WaitForPress();
+  Team = OtherAllianceSelection.WaitForPress(false, true);
   printf("Team: %s \n", Team.c_str());
 
   printf("\nTest complete.");
