@@ -6,8 +6,8 @@
 class Button
 {
   public:
-    Button(int XPos, int YPos, int Width, int Height, int Hue, std::string Text, int TextSize, int TextHue); // Initialize the button
-    Button(int XPos, int YPos, int Width, int Height, int Hue);
+    Button(int XPos, int YPos, int Width, int Height, int Hue, std::string Text, int TextSize, int TextHue); // Button with text
+    Button(int XPos, int YPos, int Width, int Height, int Hue); // Button without text
     void Draw(); // Draw the button
     void Move(int XPos, int YPos); // Move the button
     void ChangeText(std::string Text); // Chagne the text
