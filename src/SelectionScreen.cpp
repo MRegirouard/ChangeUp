@@ -29,8 +29,11 @@ SelectionScreen::SelectionScreen(Button *OptionButtons, int ButtonCount, std::st
   this->ButtonCount = ButtonCount;
 }
 
-std::string SelectionScreen::WaitForPress()
+std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
 {
+  if (PreClear)
+    Brain.Screen.clearScreen();
+
   for (int B = 0; B < ButtonCount; B++)
     OptionButtons[B].Draw();
 
@@ -49,6 +52,8 @@ std::string SelectionScreen::WaitForPress()
         if (OptionButtons[B].IsPressed())
         {
           return OptionButtons[B].Text;
+          if (PostClear)
+            Brain.Screen.clearScreen();
         }
       }
     }

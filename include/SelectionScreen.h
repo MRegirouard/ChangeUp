@@ -20,7 +20,7 @@ class SelectionScreen
     Button* OptionButtons;
     std::string TitleText;
 
-    std::string WaitForPress();
+    std::string WaitForPress(bool PreClear = true, bool PostClear = true);
 
   private:
     int ButtonCount = 2;
