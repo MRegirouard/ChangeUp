@@ -11,7 +11,7 @@ Robot::Robot(float WheelDiameter, float Width)
   printf("Robot circumference: %.3f inches.\n", RobotCircumference);
   TurningRatio = RobotCircumference / WheelCircumference; // How many wheel degrees it takes for the robot to spin 1°
   printf("Turning ratio: %.3f.\n", TurningRatio);
-  MovingRatio = 360 / WheelCircumference; // How many wheel degrees it takes to move 1 inch
+  MovingRatio = (360 / WheelCircumference) * sqrt(2); // How many wheel degrees it takes to move 1 inch
   printf("Moving ratio: %.3f.\n", MovingRatio);
 }
 
