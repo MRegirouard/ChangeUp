@@ -32,9 +32,22 @@ void pre_auton(void)
 void autonomous(void)
 {
   printf("Running autonomous...\n");
-  //Robot.Move(0, 0, 90, 50, true);
-  Robot.Move(0, 24, 0, 50);
-  Robot.Move(50, 50, 90);
+
+  printf("Moving 1 foot forward and 1 foot right...");
+  Robot.Move(12, 12, 0);
+  wait(1, sec);
+
+  printf("Moving 1 foot backwards and 1 foot left slowly...");
+  Robot.Move(-12, -12, 0, 50);
+  wait(1, sec);
+
+  printf("Spinning 90 degrees right...");
+  Robot.Move(0, 0, 90);
+  wait(1, sec);
+
+  printf("Accurately turning 180 degrees left...");
+  Robot.IMUTurn(-180, 100);
+
   printf("Autonomous complete.\n");
 }
 
