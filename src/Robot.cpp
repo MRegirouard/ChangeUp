@@ -73,3 +73,23 @@ void Robot::Move(float ForwardDistance, float RightDistance, float RotationDegre
   printf("Back right wheel will spin for: %.3f degrees.\n", BackRightDistance);
   printf("Movement complete.\n\n");
 }
+
+void Robot::IMUTurn(float Degrees, int MaxSpeed)
+{
+  float GoalHeading = IMU.heading() + Degrees;
+  float Error = GoalHeading - IMU.heading();
+  int Speed = TurnPID.CalcPID(Error);
+
+  while (Error > 5 || abs(Speed) > 15)
+  { // Attempt to fix turn until within 5° and moving less than 15% speed
+    Error = GoalHeading - IMU.heading();
+    Speed = TurnPID.CalcPID(Error);
+
+    if (Speed > MaxSpeed)
+      Speed = MaxSpeed;
+    else if (Speed < -MaxSpeed)
+      Speed = -MaxSpeed;
+
+    Drive(0, 0, Speed);
+  }
+}
