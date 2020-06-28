@@ -10,7 +10,7 @@ class Robot
     Robot(float WheelDiameter, float Width); // Initailize the robot
     void Drive(int ForwardSpeed, int RightSpeed, int RotationSpeed); // Move the robot (speed)
     void Move(float ForwardDistance, float RightDistance, float RotationDegrees, int MaxSpeed = 100, bool Wait = true); // Moves a specific distance (inches / degrees)
-    void IMUTurn(float RotationDegrees, int MaxSpeed);
+    void IMUTurn(float RotationDegrees, int MaxSpeed = 100);
   private:
     float WheelCircumference;
     float RobotCircumference;

@@ -46,7 +46,7 @@ void autonomous(void)
   wait(1, sec);
 
   printf("Accurately turning 180 degrees left...");
-  Robot.IMUTurn(-180, 100);
+  Robot.IMUTurn(-180);
 
   printf("Autonomous complete.\n");
 }
