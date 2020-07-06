@@ -38,7 +38,7 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
   Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[0].Text.c_str());
   Controller1.Screen.print("  %s", OptionButtons[1].Text.c_str());
 
-  int SelectedOption = 0;
+  int SelectedOption = 1; // Option1 or Option2
   int Option1 = 0;
   int Option2 = 1;
 
@@ -64,11 +64,11 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
         if (OptionButtons[B].IsPressed())
         {
           while (Brain.Screen.pressing()) {;}
-          
-          return OptionButtons[B].Text;
 
           if (PostClear)
             Brain.Screen.clearScreen();
+
+          return OptionButtons[B].Text;
         }
       }
     }
@@ -119,6 +119,18 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
         Controller1.Screen.clearLine();
         Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option2].Text.c_str());
       }
+    }
+    else if (Controller1.ButtonA.pressing())
+    {
+      while (Controller1.ButtonA.pressing()) {;}
+
+      if (PostClear)
+        Brain.Screen.clearScreen();
+
+      if (SelectedOption == 1)
+        return OptionButtons[Option1].Text;
+      else if (SelectedOption == 2)
+        return OptionButtons[Option2].Text;
     }
   }
 }
