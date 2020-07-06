@@ -80,6 +80,8 @@ void Robot::IMUTurn(float Degrees, int MaxSpeed)
   float Error = GoalHeading - IMU.heading();
   int Speed = TurnPID.CalcPID(Error);
 
+  TurnPID.Reset();
+
   while (Error > 5 || abs(Speed) > 15)
   { // Attempt to fix turn until within 5° and moving less than 15% speed
     Error = GoalHeading - IMU.heading();

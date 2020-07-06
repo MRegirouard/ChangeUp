@@ -9,7 +9,7 @@ PID::PID(float Proportional, float Integral, float Derivative)
 
 float PID::CalcPID(float Error)
 {
-  uint64_t Interval = vex::timer::systemHighResolution() - PrevCalcTime;
+  uint64_t Interval = vex::timer::systemHighResolution() - PrevCalcTime; // microseconds
 
   Proportional = Error * PMultiplier;
   Integral += Error * Interval * IMultiplier;
@@ -18,5 +18,16 @@ float PID::CalcPID(float Error)
   PrevError = Error;
   PrevCalcTime = vex::timer::systemHighResolution();
 
-  return Proportional + Integral + Derivative;
+  if (FirstLoop)
+  {
+    FirstLoop = false;
+    return Proportional;
+  }
+  else
+    return Proportional + Integral + Derivative;
+}
+
+void PID::Reset()
+{
+  FirstLoop = true;
 }

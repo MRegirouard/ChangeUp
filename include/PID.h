@@ -8,6 +8,7 @@ class PID
   public:
     PID(float Proportional, float Integral, float Derivative);
     float CalcPID(float Error);
+    void Reset();
 
     float PMultiplier;
     float IMultiplier;
@@ -20,6 +21,7 @@ class PID
   private:
     float PrevError;
     uint64_t PrevCalcTime;
+    bool FirstLoop = true;
 };
 
 #endif // PIDCLASS_H
