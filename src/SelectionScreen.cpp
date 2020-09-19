@@ -38,12 +38,12 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
   Controller1.Screen.print("%s", TitleText.c_str());
   Controller1.Screen.newLine();
   Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[0].Text.c_str());
+  Controller1.Screen.newLine();
   Controller1.Screen.print("  %s", OptionButtons[1].Text.c_str());
 
   int SelectedOption = 1; // Option1 or Option2
   int Option1 = 0;
   int Option2 = 1;
-
 
   if (PreClear)
     Brain.Screen.clearScreen();
@@ -53,8 +53,9 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
 
   Brain.Screen.setFont(mono30);
   Brain.Screen.setPenColor(white);
+  Brain.Screen.setFillColor(transparent);
   int TextX = 240 - vexDisplayStringWidthGet(TitleText.c_str()) / 2;
-  int TextY = 40 - vexDisplayStringHeightGet(TitleText.c_str()) / 2;
+  int TextY = 50 - vexDisplayStringHeightGet(TitleText.c_str()) / 2;
   Brain.Screen.printAt(TextX, TextY, TitleText.c_str());
 
   while (true)
@@ -82,11 +83,12 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
         Option2--;
         SelectedOption = 1;
 
-        Controller1.Screen.setCursor(2, 1);
-        Controller1.Screen.clearLine();
+        Controller1.Screen.clearScreen();
+        Controller1.Screen.setCursor(1, 1);
+        Controller1.Screen.print("%s", TitleText.c_str());
+        Controller1.Screen.newLine();
         Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option1].Text.c_str());
         Controller1.Screen.newLine();
-        Controller1.Screen.clearLine();
         Controller1.Screen.print("  %s", OptionButtons[Option2].Text.c_str());
       }
       else if (SelectedOption == 2)
@@ -97,10 +99,25 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
         Controller1.Screen.print(" ");
         SelectedOption = 1;
       }
+
+      while (Controller1.ButtonUp.pressing()) {;}
     }
     else if (Controller1.ButtonDown.pressing())
     {
       if (SelectedOption == 2 && Option2 < ButtonCount - 1)
+      {
+        Option1++;
+        Option2++;
+
+        Controller1.Screen.clearScreen();
+        Controller1.Screen.setCursor(1, 1);
+        Controller1.Screen.print("%s", TitleText.c_str());
+        Controller1.Screen.newLine();
+        Controller1.Screen.print("  %s", OptionButtons[Option1].Text.c_str());
+        Controller1.Screen.newLine();
+        Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option2].Text.c_str());
+      }
+      else if (SelectedOption == 1)
       {
         Controller1.Screen.setCursor(2, 1);
         Controller1.Screen.print(" ");
@@ -108,19 +125,8 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
         Controller1.Screen.print(Indicator.c_str());
         SelectedOption = 2;
       }
-      else if (SelectedOption == 1)
-      {
-        Option1++;
-        Option2++;
-        SelectedOption = 2;
 
-        Controller1.Screen.setCursor(2, 1);
-        Controller1.Screen.clearLine();
-        Controller1.Screen.print("  %s", OptionButtons[Option1].Text.c_str());
-        Controller1.Screen.newLine();
-        Controller1.Screen.clearLine();
-        Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option2].Text.c_str());
-      }
+      while (Controller1.ButtonDown.pressing()) {;}
     }
     else if (Controller1.ButtonA.pressing())
     {
@@ -128,6 +134,8 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
 
       if (PostClear)
         Brain.Screen.clearScreen();
+
+      Controller1.Screen.clearScreen();
 
       if (SelectedOption == 1)
         return OptionButtons[Option1].Text;

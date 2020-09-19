@@ -30,8 +30,10 @@ void pre_auton()
   SelectionScreen AllianceSelection = SelectionScreen(SelectionScreen::Alliance);
   SelectionScreen SideSelection = SelectionScreen(SelectionScreen::LeftRightSide);
   SelectionScreen ConfirmSelection = SelectionScreen(SelectionScreen::ConfirmCancel);
-  Button AllianceSelectionButtons[2] = {Button(40, 140, 180, 80, red), Button(160, 140, 180, 80, blue)};
+  Button AllianceSelectionButtons[2] = {Button(30, 70, 200, 140, red), Button(250, 70, 200, 140, blue)};
   SelectionScreen OtherAllianceSelection = SelectionScreen(AllianceSelectionButtons, 2, "Select Team (2):");
+  Button TripleButtons[3] = {Button(30, 60, 100, 140, red, "1", 30, black), Button(150, 60, 100, 140, yellow, "2", 30, black), Button(270, 60, 100, 140, green, "3", 30, black)};
+  SelectionScreen TripleButtonSelection = SelectionScreen(TripleButtons, 3, "3 Button Test:");
 
   Brain.Screen.setFillColor(black);
   Brain.Screen.clearScreen();
@@ -76,21 +78,25 @@ void pre_auton()
     Side = "Right";
   }
 
-  printf("Side: %s \n ", Side.c_str());
+  while(Brain.Screen.pressing()) {;}
 
-  printf("Beginning selection screen test.");
+  printf("Side: %s \n", Side.c_str());
+
+  printf("Beginning selection screen test. \n");
 
   Team = AllianceSelection.WaitForPress();
-  printf("Team: %s \n", Team.c_str());
+  printf("Team: %s\n", Team.c_str());
 
   Side = SideSelection.WaitForPress();
-  printf("Side: %s \n ", Side.c_str());
+  printf("Side: %s \n", Side.c_str());
 
   Confirm = ConfirmSelection.WaitForPress();
-  printf("Confirm: %s \n ", Confirm.c_str());
+  printf("Confirm: %s \n", Confirm.c_str());
 
   Team = OtherAllianceSelection.WaitForPress(false, true);
   printf("Team: %s \n", Team.c_str());
+
+  TripleButtonSelection.WaitForPress();
 
   printf("\nTest complete.");
 }
