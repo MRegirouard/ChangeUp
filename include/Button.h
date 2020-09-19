@@ -6,6 +6,7 @@
 class Button
 {
   public:
+    Button(); // Default constructor
     Button(int XPos, int YPos, int Width, int Height, color Color, std::string Text, int TextSize, color TextColor); // Button with text
     Button(int XPos, int YPos, int Width, int Height, color Color); // Button without text
     void Draw(); // Draw the button

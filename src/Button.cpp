@@ -1,5 +1,8 @@
 #include "Button.h"
 
+Button::Button()
+{}
+
 Button::Button(int XPos, int YPos, int Width, int Height, color Color, std::string Text, int TextSize, color TextColor)
 {
   Button(XPos, YPos, Width, Height, Color);

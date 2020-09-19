@@ -2,6 +2,8 @@
 
 SelectionScreen::SelectionScreen(SelectionScreenType ScreenType)
 {
+  OptionButtons = new Button[2];
+
   if (ScreenType == SelectionScreenType::Alliance)
   {
     TitleText = "Select Alliance:";
