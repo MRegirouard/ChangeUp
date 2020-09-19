@@ -5,7 +5,11 @@ Button::Button()
 
 Button::Button(int XPos, int YPos, int Width, int Height, color Color, std::string Text, int TextSize, color TextColor)
 {
-  Button(XPos, YPos, Width, Height, Color);
+  this->XPos = XPos;
+  this->YPos = YPos;
+  this->Width = Width;
+  this->Height = Height;
+  this->Color = Color;
   this->Text = Text;
   this->TextColor = TextColor;
 
@@ -42,10 +46,12 @@ Button::Button(int XPos, int YPos, int Width, int Height, color Color)
 
 void Button::Draw()
 {
+  Brain.Screen.setFillColor(Color);
   Brain.Screen.setPenColor(Color);
-  Brain.Screen.setFont(Font);
-  Brain.Screen.drawRectangle(XPos, YPos, XPos + Width, YPos + Height);
+  Brain.Screen.drawRectangle(XPos, YPos, Width, Height);
+
   Brain.Screen.setPenColor(TextColor);
+  Brain.Screen.setFont(Font);
   Brain.Screen.printAt(TextX, TextY, Text.c_str());
 }
 
@@ -84,6 +90,6 @@ bool Button::IsPressed()
 void Button::CalcTextLocation()
 {
   Brain.Screen.setFont(Font);
-  TextX = (XPos + Width / 2) - (vexDisplayStringWidthGet(Text.c_str()) / 2);
-  TextY = (YPos + Height / 2) - (vexDisplayStringHeightGet(Text.c_str()) / 2);
+  TextX = (XPos + (Width / 2)) - (vexDisplayStringWidthGet(Text.c_str()) / 2);
+  TextY = (YPos + (Height / 2)) + (vexDisplayStringHeightGet(Text.c_str()) / 4);
 }

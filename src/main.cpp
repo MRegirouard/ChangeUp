@@ -3,8 +3,6 @@
 // [Name]               [Type]        [Port(s)]
 // Controller1          controller                    
 // ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
 #include "Button.h"
@@ -12,34 +10,37 @@
 
 using namespace vex;
 competition Competition;
-Button RedButton(40, 140, 180, 80, red);
-Button BlueButton(160, 140, 180, 80, blue);
-Button LeftSideButton(40, 100, 200, 80, orange, "Left Side", 20, black);
-Button RightSideButton(140, 100, 200, 80, green, "Right Side", 20, black);
-std::string TeamMsg = "Select Team:";
-std::string Team;
-std::string SideMsg = "Select Side:";
-std::string Side;
-std::string Confirm;
-SelectionScreen AllianceSelection = SelectionScreen(SelectionScreen::Alliance);
-SelectionScreen SideSelection = SelectionScreen(SelectionScreen::LeftRightSide);
-SelectionScreen ConfirmSelection = SelectionScreen(SelectionScreen::ConfirmCancel);
-Button AllianceSelectionButtons[2] = {Button(40, 140, 180, 80, red), Button(160, 140, 180, 80, blue)};
-SelectionScreen OtherAllianceSelection = SelectionScreen(AllianceSelectionButtons, 2, "Select Team (2):");
 
 void pre_auton()
 {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  printf("Beginning button test.");
+  printf("Beginning button test.\n");
+
+  Button RedButton(30, 70, 200, 140, red);
+  Button BlueButton(250, 70, 200, 140, blue);
+  Button LeftSideButton(30, 70, 200, 140, orange, "Left Side", 30, black);
+  Button RightSideButton(250, 70, 200, 140, green, "Right Side", 30, black);
+  std::string TeamMsg = "Select Team:";
+  std::string Team;
+  std::string SideMsg = "Select Side:";
+  std::string Side;
+  std::string Confirm;
+  SelectionScreen AllianceSelection = SelectionScreen(SelectionScreen::Alliance);
+  SelectionScreen SideSelection = SelectionScreen(SelectionScreen::LeftRightSide);
+  SelectionScreen ConfirmSelection = SelectionScreen(SelectionScreen::ConfirmCancel);
+  Button AllianceSelectionButtons[2] = {Button(40, 140, 180, 80, red), Button(160, 140, 180, 80, blue)};
+  SelectionScreen OtherAllianceSelection = SelectionScreen(AllianceSelectionButtons, 2, "Select Team (2):");
 
   Brain.Screen.setFillColor(black);
   Brain.Screen.clearScreen();
   RedButton.Draw();
   BlueButton.Draw();
   Brain.Screen.setFont(mono30);
-  Brain.Screen.printAt(240 - vexDisplayStringWidthGet(TeamMsg.c_str()) / 2, 80 - vexDisplayStringHeightGet(TeamMsg.c_str()) / 2, TeamMsg.c_str());
+  Brain.Screen.setFillColor(transparent);
+  Brain.Screen.setPenColor(white);
+  Brain.Screen.printAt(240 - vexDisplayStringWidthGet(TeamMsg.c_str()) / 2, 65 - vexDisplayStringHeightGet(TeamMsg.c_str()) / 2, TeamMsg.c_str());
 
   while (!(RedButton.IsPressed() || BlueButton.IsPressed())) {;}
 
@@ -52,12 +53,17 @@ void pre_auton()
     Team = "Blue";
   }
 
+  while(Brain.Screen.pressing()) {;}
+
   printf("Team: %s \n", Team.c_str());
 
   Brain.Screen.clearScreen();
   LeftSideButton.Draw();
   RightSideButton.Draw();
-  Brain.Screen.printAt(240 - vexDisplayStringWidthGet(SideMsg.c_str()) / 2, 80 - vexDisplayStringHeightGet(SideMsg.c_str()) / 2, SideMsg.c_str());
+  Brain.Screen.setFont(mono30);
+  Brain.Screen.setFillColor(transparent);
+  Brain.Screen.setPenColor(white);
+  Brain.Screen.printAt(240 - vexDisplayStringWidthGet(SideMsg.c_str()) / 2, 65 - vexDisplayStringHeightGet(SideMsg.c_str()) / 2, SideMsg.c_str());
 
   while (!(LeftSideButton.IsPressed() || RightSideButton.IsPressed())) {;}
 
