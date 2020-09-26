@@ -1,7 +1,9 @@
 #include "SelectionScreen.h"
 
-SelectionScreen::SelectionScreen(SelectionScreenType ScreenType)
+SelectionScreen::SelectionScreen(SelectionScreenType ScreenType, vex::controller* Controller)
 {
+  this->Controller = Controller;
+
   OptionButtons = new Button[2];
 
   if (ScreenType == SelectionScreenType::Alliance)
@@ -24,8 +26,9 @@ SelectionScreen::SelectionScreen(SelectionScreenType ScreenType)
   }
 }
 
-SelectionScreen::SelectionScreen(Button *OptionButtons, int ButtonCount, std::string TitleText)
+SelectionScreen::SelectionScreen(Button *OptionButtons, int ButtonCount, std::string TitleText, vex::controller* Controller)
 {
+  this->Controller = Controller;
   this->OptionButtons = OptionButtons;
   this->TitleText = TitleText;
   this->ButtonCount = ButtonCount;
@@ -33,13 +36,13 @@ SelectionScreen::SelectionScreen(Button *OptionButtons, int ButtonCount, std::st
 
 std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
 {
-  Controller1.Screen.clearScreen();
-  Controller1.Screen.setCursor(1, 1);
-  Controller1.Screen.print("%s", TitleText.c_str());
-  Controller1.Screen.newLine();
-  Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[0].Text.c_str());
-  Controller1.Screen.newLine();
-  Controller1.Screen.print("  %s", OptionButtons[1].Text.c_str());
+  Controller->Screen.clearScreen();
+  Controller->Screen.setCursor(1, 1);
+  Controller->Screen.print("%s", TitleText.c_str());
+  Controller->Screen.newLine();
+  Controller->Screen.print("%s %s", Indicator.c_str(), OptionButtons[0].Text.c_str());
+  Controller->Screen.newLine();
+  Controller->Screen.print("  %s", OptionButtons[1].Text.c_str());
 
   int SelectedOption = 1; // Option1 or Option2
   int Option1 = 0;
@@ -75,7 +78,7 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
         }
       }
     }
-    else if (Controller1.ButtonUp.pressing())
+    else if (Controller->ButtonUp.pressing())
     {
       if (SelectedOption == 1 && Option1 > 0)
       {
@@ -83,59 +86,59 @@ std::string SelectionScreen::WaitForPress(bool PreClear, bool PostClear)
         Option2--;
         SelectedOption = 1;
 
-        Controller1.Screen.clearScreen();
-        Controller1.Screen.setCursor(1, 1);
-        Controller1.Screen.print("%s", TitleText.c_str());
-        Controller1.Screen.newLine();
-        Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option1].Text.c_str());
-        Controller1.Screen.newLine();
-        Controller1.Screen.print("  %s", OptionButtons[Option2].Text.c_str());
+        Controller->Screen.clearScreen();
+        Controller->Screen.setCursor(1, 1);
+        Controller->Screen.print("%s", TitleText.c_str());
+        Controller->Screen.newLine();
+        Controller->Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option1].Text.c_str());
+        Controller->Screen.newLine();
+        Controller->Screen.print("  %s", OptionButtons[Option2].Text.c_str());
       }
       else if (SelectedOption == 2)
       {
-        Controller1.Screen.setCursor(2, 1);
-        Controller1.Screen.print(Indicator.c_str());
-        Controller1.Screen.newLine();
-        Controller1.Screen.print(" ");
+        Controller->Screen.setCursor(2, 1);
+        Controller->Screen.print(Indicator.c_str());
+        Controller->Screen.newLine();
+        Controller->Screen.print(" ");
         SelectedOption = 1;
       }
 
-      while (Controller1.ButtonUp.pressing()) {;}
+      while (Controller->ButtonUp.pressing()) {;}
     }
-    else if (Controller1.ButtonDown.pressing())
+    else if (Controller->ButtonDown.pressing())
     {
       if (SelectedOption == 2 && Option2 < ButtonCount - 1)
       {
         Option1++;
         Option2++;
 
-        Controller1.Screen.clearScreen();
-        Controller1.Screen.setCursor(1, 1);
-        Controller1.Screen.print("%s", TitleText.c_str());
-        Controller1.Screen.newLine();
-        Controller1.Screen.print("  %s", OptionButtons[Option1].Text.c_str());
-        Controller1.Screen.newLine();
-        Controller1.Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option2].Text.c_str());
+        Controller->Screen.clearScreen();
+        Controller->Screen.setCursor(1, 1);
+        Controller->Screen.print("%s", TitleText.c_str());
+        Controller->Screen.newLine();
+        Controller->Screen.print("  %s", OptionButtons[Option1].Text.c_str());
+        Controller->Screen.newLine();
+        Controller->Screen.print("%s %s", Indicator.c_str(), OptionButtons[Option2].Text.c_str());
       }
       else if (SelectedOption == 1)
       {
-        Controller1.Screen.setCursor(2, 1);
-        Controller1.Screen.print(" ");
-        Controller1.Screen.setCursor(3, 1);
-        Controller1.Screen.print(Indicator.c_str());
+        Controller->Screen.setCursor(2, 1);
+        Controller->Screen.print(" ");
+        Controller->Screen.setCursor(3, 1);
+        Controller->Screen.print(Indicator.c_str());
         SelectedOption = 2;
       }
 
-      while (Controller1.ButtonDown.pressing()) {;}
+      while (Controller->ButtonDown.pressing()) {;}
     }
-    else if (Controller1.ButtonA.pressing())
+    else if (Controller->ButtonA.pressing())
     {
-      while (Controller1.ButtonA.pressing()) {;}
+      while (Controller->ButtonA.pressing()) {;}
 
       if (PostClear)
         Brain.Screen.clearScreen();
 
-      Controller1.Screen.clearScreen();
+      Controller->Screen.clearScreen();
 
       if (SelectedOption == 1)
         return OptionButtons[Option1].Text;

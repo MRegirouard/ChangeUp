@@ -27,13 +27,13 @@ void pre_auton()
   std::string SideMsg = "Select Side:";
   std::string Side;
   std::string Confirm;
-  SelectionScreen AllianceSelection = SelectionScreen(SelectionScreen::Alliance);
-  SelectionScreen SideSelection = SelectionScreen(SelectionScreen::LeftRightSide);
-  SelectionScreen ConfirmSelection = SelectionScreen(SelectionScreen::ConfirmCancel);
+  SelectionScreen AllianceSelection = SelectionScreen(SelectionScreen::Alliance, &Controller1);
+  SelectionScreen SideSelection = SelectionScreen(SelectionScreen::LeftRightSide, &Controller1);
+  SelectionScreen ConfirmSelection = SelectionScreen(SelectionScreen::ConfirmCancel, &Controller1);
   Button AllianceSelectionButtons[2] = {Button(30, 70, 200, 140, red), Button(250, 70, 200, 140, blue)};
-  SelectionScreen OtherAllianceSelection = SelectionScreen(AllianceSelectionButtons, 2, "Select Team (2):");
+  SelectionScreen OtherAllianceSelection = SelectionScreen(AllianceSelectionButtons, 2, "Select Team (2):", &Controller1);
   Button TripleButtons[3] = {Button(30, 60, 100, 140, red, "1", 30, black), Button(150, 60, 100, 140, yellow, "2", 30, black), Button(270, 60, 100, 140, green, "3", 30, black)};
-  SelectionScreen TripleButtonSelection = SelectionScreen(TripleButtons, 3, "3 Button Test:");
+  SelectionScreen TripleButtonSelection = SelectionScreen(TripleButtons, 3, "3 Button Test:", &Controller1);
 
   Brain.Screen.setFillColor(black);
   Brain.Screen.clearScreen();

@@ -14,8 +14,8 @@ class SelectionScreen
       LeftRightSide
     };
 
-    SelectionScreen(SelectionScreenType ScreenType);
-    SelectionScreen(Button *OptionButtons, int ButtonCount, std::string TitleText);
+    SelectionScreen(SelectionScreenType ScreenType, vex::controller* Controller);
+    SelectionScreen(Button *OptionButtons, int ButtonCount, std::string TitleText, vex::controller* Controller);
 
     Button* OptionButtons;
     std::string TitleText;
@@ -25,6 +25,7 @@ class SelectionScreen
   private:
     int ButtonCount = 2;
     std::string Indicator = "-";
+    vex::controller* Controller;
 };
 
 #endif // SELECTIONSCREENCLASS_H
