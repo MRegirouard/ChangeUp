@@ -1,4 +1,5 @@
 #include "HolonomicDrive.h"
+#include "AngleConversions.h"
 
 HolonomicDrive::HolonomicDrive(Wheel *Wheels, int WheelCount, float WheelCircumference)
 {
@@ -12,13 +13,12 @@ void HolonomicDrive::MoveTo(int ForwardDistance, int RightDistance, int RoationD
 
 void HolonomicDrive::SetSpeed(int ForwardSpeed, int RightSpeed, int RotationSpeed)
 {
-  float Angle = atan2(ForwardSpeed, RightSpeed) * 180 / M_PI;
+  float Angle = atan2(ForwardSpeed, RightSpeed) * toDeg;
   float Magnitude = sqrt(ForwardSpeed^2 + RightSpeed^2);
 
   for (int W = 0; W < WheelCount; W++)
   {
-    float WheelRadians = Wheels[W].Angle * 180 / M_PI;
-    Wheels[W].setVelocity(Magnitude * sin(Angle - WheelRadians + 90 * 180 / M_PI) + RotationSpeed, percent);
+    Wheels[W].setVelocity(Magnitude * sin((Angle - Wheels[W].Angle + 90) * toRad) + RotationSpeed, percent);
     Wheels[W].spin(forward);
   }
 }
