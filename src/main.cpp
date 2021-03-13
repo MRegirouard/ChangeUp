@@ -10,6 +10,7 @@
 // LeftLift             motor         2               
 // RightLift            motor         16              
 // Controller1          controller                    
+// Controller2          controller                    
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"

@@ -17,6 +17,7 @@ motor RightIntake = motor(PORT17, ratio18_1, false);
 motor LeftLift = motor(PORT2, ratio18_1, true);
 motor RightLift = motor(PORT16, ratio18_1, false);
 controller Controller1 = controller(primary);
+controller Controller2 = controller(partner);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
