@@ -14,13 +14,18 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+#include "SelectionScreen.h"
 
 using namespace vex;
 competition Competition;
+bool DualController = true;
 
 void pre_auton()
 {
-  
+  Button DualControl(30, 70, 200, 140, green, "Dual", 30, black);
+  Button SingleControl(250, 70, 200, 140, orange, "Single", 30, black);
+  SelectionScreen ControllerSelction(new Button[2] {DualControl, SingleControl}, 2, "Select Control Mode:");
+  DualController = ControllerSelction.WaitForPress(true, true) == "Dual";
 }
 
 void autonomous()
