@@ -5,12 +5,16 @@
 // FrontRight           motor         19              
 // BackLeft             motor         12              
 // BackRight            motor         18              
-// LeftIntake           motor         1               
-// RightIntake          motor         17              
-// LeftLift             motor         2               
-// RightLift            motor         16              
+// LeftIntake           motor         13              
+// RightIntake          motor         20              
+// LeftLift             motor         4               
+// RightLift            motor         7               
 // Controller1          controller                    
 // Controller2          controller                    
+// Vision               vision        15              
+// BallSwitch           limit         A               
+// ArmDownSwitch        limit         B               
+// ArmUpSwitch          limit         C               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
