@@ -19,10 +19,13 @@
 
 #include "vex.h"
 #include "SelectionScreen.h"
+#include "Arm.h"
 
 using namespace vex;
 competition Competition;
 bool DualController = true;
+
+Arm LiftArm(&LeftLift, &RightLift, 5, &ArmDownSwitch, &ArmUpSwitch);
 
 void pre_auton()
 {
@@ -41,6 +44,25 @@ void usercontrol()
 {
   while (true)
   {
+    if (DualController)
+    {
+      if (Controller2.ButtonL1.pressing())
+        LiftArm.StartRaise(100);
+      else if (Controller2.ButtonL2.pressing())
+        LiftArm.StartLower(100);
+      else
+        LiftArm.Stop();
+    }
+    else
+    {
+      if (Controller1.ButtonL1.pressing())
+        LiftArm.StartRaise(100);
+      else if (Controller1.ButtonL2.pressing())
+        LiftArm.StartLower(100);
+      else
+        LiftArm.Stop();
+    }
+
     wait(20, msec); // Sleep the task for a short amount of time to prevent wasted resources.
   }
 }
