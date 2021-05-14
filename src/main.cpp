@@ -20,12 +20,14 @@
 #include "vex.h"
 #include "SelectionScreen.h"
 #include "Arm.h"
+#include "Intake.h"
 
 using namespace vex;
 competition Competition;
 bool DualController = true;
 
 Arm LiftArm(&LeftLift, &RightLift, 5, &ArmDownSwitch, &ArmUpSwitch);
+Intake BallIntake(&LeftIntake, &RightIntake, 1, &BallSwitch);
 
 void pre_auton()
 {
@@ -52,6 +54,13 @@ void usercontrol()
         LiftArm.StartLower(100);
       else
         LiftArm.Stop();
+
+      if (Controller2.ButtonR1.pressing())
+        BallIntake.StartSpinIn(100);
+      else if (Controller2.ButtonR2.pressing())
+        BallIntake.StartSpinOut(100);
+      else
+        BallIntake.Stop();
     }
     else
     {
@@ -61,6 +70,13 @@ void usercontrol()
         LiftArm.StartLower(100);
       else
         LiftArm.Stop();
+
+      if (Controller1.ButtonR1.pressing())
+        BallIntake.StartSpinIn(100);
+      else if (Controller1.ButtonR2.pressing())
+        BallIntake.StartSpinOut(100);
+      else
+        BallIntake.Stop();
     }
 
     wait(20, msec); // Sleep the task for a short amount of time to prevent wasted resources.
